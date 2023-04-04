@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<form  method="POST">
+<form method="POST">
   <div class="wrapper ">
     <h1>Login</h1>
     <div class="Textbox">
@@ -24,11 +24,14 @@
       <span class="colon ms-colon">:</span>
       <span class="millisecond">00</span>
     </div>
+    <div id="transcription" class="Textbox"> </div>
+    
     <div class="buttons">
-      <button class="start">Start</button>
-      <button class="stop">Stop</button>
-      <button class="reset">Reset</button>
+      <span class="start" >Start</span>
+      <span class="stop">Stop</span>
+      <span class="reset">Reset</span>
     </div>
+
     <div class="buttons">
       <button class="submit" type="submit">Submit</button>
     </div>
