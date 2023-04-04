@@ -15,9 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //timer starts here
   //   let hr = "0" + 0,
-  let min = "0" + 0,
-    sec = "0" + 0,
-    ms = "0" + 0,
+  let min = "0" + 5,
+    sec = "6" + 0,
+    ms = "1" + 0,
     startTimer;
 
   const startBtn = document.querySelector(".start"),
@@ -78,20 +78,20 @@ document.addEventListener("DOMContentLoaded", () => {
     wave5.classList.add("animated");
 
     startTimer = setInterval(() => {
-      ms++;
+      ms--;
 
       ms = ms < 10 ? "0" + ms : ms;
 
-      if (ms == 100) {
-        sec++;
+      if (ms == 0) {
+        sec--;
         sec = sec < 10 ? "0" + sec : sec;
-        ms = "0" + 0;
+        ms = "10" + 0;
       }
 
-      if (sec == 60) {
-        min++;
+      if (sec == 0) {
+        min--;
         min = min < 10 ? "0" + min : min;
-        sec = "0" + 0;
+        sec = "6" + 0;
       }
 
       //   if (min == 60) {
