@@ -6,7 +6,7 @@ import speech_recognition as spr
 import base64
 import tempfile
 from pydub import AudioSegment
-import librosa  
+import librosa 
 import io
 
 app = Flask(__name__)
@@ -22,34 +22,42 @@ class UserId(db.Model, UserMixin):
     id = db.Column(db.Integer)
     name = db.Column(db.String(100))
 
-Prediction = 0
+# Prediction = 0
 
 @app.route('/',methods=['POST','GET'])
 def index():
-    if request.method =='POST':
-        return redirect('/login')
+    # if request.method =='POST':
+    #     return redirect('/login')
     
     return render_template('register.html')
 
 
 @app.route('/login',methods=['POST','GET'])
 def login():
-    if request.method=='POST':
-        return redirect('/home')
+    # if request.method=='POST':
+    #     return redirect('/home')
     
     return render_template('login.html')
 
 
 @app.route('/home')
 def home():
-    person_metadata = UserId.query.filter_by(id=Prediction)
+    # Prediction = model_fun()
+    person_metadata = UserId.query.filter_by(id=0)
     return render_template('home.html',person_metadata=person_metadata[0].name)
 
 @app.route('/convert', methods=['POST'])
 def convert():
+    # global Prediction
+    # print(Prediction)
     data = request.get_json()
     audioData = base64.b64decode(data['audio'])
-    audio_array, sr = librosa.load(io.BytesIO(audioData), sr=41000)
+    audio1 = AudioSegment.from_file(io.BytesIO(audioData))
+    audio1.export('audio.wav', format='wav')
+    # print(audioData)
+    # audio_array, sr = librosa.load(io.BytesIO(audioData), sr=44000)
+    # print(audio_array)
+    # Prediction = model_fun(audioData)
     with tempfile.NamedTemporaryFile(suffix='.webm', delete=False) as audioFile:
         audioFile.write(audioData)
         audioFile.flush()
@@ -61,9 +69,9 @@ def convert():
         with audio as source:
             audioData = recognizer.record(source)
         text = recognizer.recognize_sphinx(audioData)
-    global Prediction 
-    Prediction = model_fun(audio_array)
+    
+    
     return text
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
