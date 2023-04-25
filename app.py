@@ -1,12 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from model import model_fun
+# from model import model_fun
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 import speech_recognition as spr
 import base64
 import tempfile
 from pydub import AudioSegment
-import librosa 
+# import librosa 
 import io
 
 app = Flask(__name__)
@@ -26,21 +26,21 @@ class UserId(db.Model, UserMixin):
 
 @app.route('/',methods=['POST','GET'])
 def index():
-    # if request.method =='POST':
-    #     return redirect('/login')
-    
-    return render_template('register.html')
+    if request.method =='POST':
+        return redirect('/login')
+    else:
+        return render_template('register.html')
 
 
 @app.route('/login',methods=['POST','GET'])
 def login():
-    # if request.method=='POST':
-    #     return redirect('/home')
-    
-    return render_template('login.html')
+    if request.method=='POST':
+        return redirect('/home')
+    else:
+        return render_template('login.html')
 
 
-@app.route('/home')
+@app.route('/home',methods=['POST','GET'])
 def home():
     # Prediction = model_fun()
     person_metadata = UserId.query.filter_by(id=0)
@@ -74,4 +74,4 @@ def convert():
     return text
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)
